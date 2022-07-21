@@ -1,44 +1,38 @@
 package com.example.demo.dob;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Set;
 
-
+/*implements UserDetails*/
 @Entity
 @Table(name = "user")
-public class User implements UserDetails {
+public class User  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String firstName;
     private String secondName;
-    private int phoneNumber;
+    private String phoneNumber;
     private String password;
     private String email;
-    private int subscriptions;
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> roles;
+  /*  @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles;*/
 
-    @Override
+   /* @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
     }
-
-    @Override
+*/
+   /* @Override*/
     public String getPassword() {
         return password;
     }
 
-    @Override
+  /*  @Override*/
     public String getUsername() {
         return getFirstName();
     }
 
-    @Override
+ /*   @Override
     public boolean isAccountNonExpired() {
         return false;
     }
@@ -51,9 +45,9 @@ public class User implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() {
         return false;
-    }
+    }*/
 
-    @Override
+ /*   @Override*/
     public boolean isEnabled() {
         return true;
     }
@@ -82,11 +76,11 @@ public class User implements UserDetails {
         this.secondName = secondName;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -102,19 +96,11 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    public int getSubscriptions() {
-        return subscriptions;
-    }
-
-    public void setSubscriptions(int subscriptions) {
-        this.subscriptions = subscriptions;
-    }
-
-    public Set<Role> getRoles() {
+    /*public Set<Role> getRoles() {
         return roles;
     }
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
-    }
+    }*/
 }

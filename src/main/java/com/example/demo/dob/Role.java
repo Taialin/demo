@@ -1,3 +1,4 @@
+/*
 package com.example.demo.dob;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -49,3 +50,4 @@ public class Role implements GrantedAuthority {
         this.users = users;
     }
 }
+*/

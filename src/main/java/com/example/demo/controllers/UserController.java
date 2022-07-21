@@ -3,32 +3,51 @@ package com.example.demo.controllers;
 import com.example.demo.Services.UserService;
 import com.example.demo.dob.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+
+@RequestMapping("/api")
 @RestController
-@CrossOrigin
+@CrossOrigin("*")
+@ComponentScan("com.example.demo")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
- /*  @RequestMapping(value = "/user", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    @CrossOrigin(origins = "*")
-    public User registration(@RequestBody User user) {
-       return userService.save(user);
-   }*/
-
 
     @GetMapping("/all_users")
-    @CrossOrigin(origins = "*")
     public List<User> getAllUsers() {
         return userService.findAll();
     }
 
+    @RequestMapping(value = "/user", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin(origins = "*")
+    public User registration(@RequestBody User user) {
+       return userService.save(user);
+   }
+
+
+   @PostMapping("/doLogin")
+   public String create(@RequestParam("firstName") String name, @RequestParam("secondName") String secondName,
+                        @RequestParam("phoneNumber") String phoneNumber, @RequestParam("email") String email,
+                        @RequestParam("password") String password, Model model){
+        User user = new User();
+        user.setFirstName(name);
+        user.setSecondName(secondName);
+        user.setPhoneNumber(phoneNumber);
+        user.setEmail(email);
+        user.setPassword(password);
+
+        model.addAttribute("user", user);
+
+        return "sss";
+   }
 
     @GetMapping("/user_id")
     @CrossOrigin(origins = "*")
@@ -42,4 +61,6 @@ public class UserController {
     public List<User> getPhoneNumber(Integer telephone) {
         return userService.findPhoneNumber(telephone);
     }
+
+
 }

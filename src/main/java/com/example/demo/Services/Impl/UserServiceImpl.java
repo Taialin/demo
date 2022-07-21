@@ -1,14 +1,9 @@
 package com.example.demo.Services.Impl;
 
 import com.example.demo.Services.UserService;
-import com.example.demo.dob.Role;
 import com.example.demo.dob.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -21,13 +16,13 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     @Autowired
     private final UserRepository userRepository;
-    @Autowired
+   /* @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
-
+*/
     @Autowired
     public UserServiceImpl(UserRepository userRepository) { this.userRepository = userRepository; }
 
-
+/*
     @Override
     public boolean save(User user) {
         User existingUser = userRepository.findAllByFirstName(user.getFirstName());
@@ -37,6 +32,12 @@ public class UserServiceImpl implements UserService {
         user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return true;
+    }*/
+
+    @Override
+    public User save(User user) {
+
+            return userRepository.save(user);
     }
 
     @Override
@@ -55,8 +56,8 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<User> findPhoneNumber(Integer telephone) {
-        return findAll().stream().filter(user -> telephone.equals(user.getPhoneNumber())).collect(Collectors.toList());
+    public List<User> findPhoneNumber(Integer phoneNumber) {
+        return findAll().stream().filter(user -> phoneNumber.equals(user.getPhoneNumber())).collect(Collectors.toList());
     }
 
     @Override
@@ -70,10 +71,10 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(user);
     }
 
-    @Override
+ /*   @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findAllByFirstName(username);
-    }
+    }*/
 }
 
 

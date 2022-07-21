@@ -1,12 +1,11 @@
 package com.example.demo.Services;
 
 import com.example.demo.dob.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
-public interface UserService extends UserDetailsService {
-    boolean save(User user);
+public interface UserService /*extends UserDetailsService*/ {
+    User save(User user);
 
     User getUserByPassword(String password);
     List<User> findAll();

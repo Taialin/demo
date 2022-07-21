@@ -1,22 +1,19 @@
 package com.example.demo.controllers;
 
 import com.example.demo.Services.UserService;
-import com.example.demo.dob.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping(value = "/registration")
 public class RegistrationController {
 
 
-    @RequestMapping(method= RequestMethod.GET, produces = "text/html")
+  /*  @RequestMapping(method= RequestMethod.GET, produces = "text/html")
     public String index() {
         return "index";
-    }
+    }*/
     @Autowired
     private UserService userService;
 /*
@@ -27,7 +24,7 @@ public class RegistrationController {
         return "registration";
     }*/
 
-    @PostMapping("/registration")
+   /* @PostMapping("/registration")
     public String addUser(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
@@ -39,6 +36,6 @@ public class RegistrationController {
         }
 
         return "redirect:/";
-    }
+    }*/
 
 }
