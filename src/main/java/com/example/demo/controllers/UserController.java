@@ -4,7 +4,6 @@ import com.example.demo.Services.UserService;
 import com.example.demo.dob.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,12 +25,12 @@ public class UserController {
         return userService.findAll();
     }
 
-    @RequestMapping(value = "/user", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+   /* @RequestMapping(value = "/user", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin(origins = "*")
     public User registration(@RequestBody User user) {
        return userService.save(user);
    }
-
+*/
 
    @PostMapping("/doLogin")
    public String create(@RequestParam("firstName") String name, @RequestParam("secondName") String secondName,

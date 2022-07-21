@@ -1,4 +1,3 @@
-/*
 package com.example.demo.dob;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -19,6 +18,10 @@ public class Role implements GrantedAuthority {
     public Role(Long id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Role() {
+
     }
 
     @Override
@@ -50,4 +53,3 @@ public class Role implements GrantedAuthority {
         this.users = users;
     }
 }
-*/
