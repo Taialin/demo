@@ -4,8 +4,10 @@ import com.example.demo.Services.UserService;
 import com.example.demo.dob.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -19,10 +21,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-
-
-
-
     @GetMapping("/all_users")
     public List<User> getAllUsers() {
         return userService.findAll();
@@ -35,14 +33,14 @@ public class UserController {
    }
 */
 
-    @GetMapping("/registration")
+/*    @GetMapping("/registration")
     public String registration(@ModelAttribute User user, Model model) {
         User user_in = userService.save(user);
         model.addAttribute(user_in.getFirstName());
         System.out.println(user.getFirstName());
 
         return "registration";
-    }
+    }*/
 
     @GetMapping("/user_id")
     @CrossOrigin(origins = "*")

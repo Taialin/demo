@@ -1,11 +1,12 @@
 package com.example.demo.Services.Impl;
 
-import com.example.demo.Security.PasswordConfig;
 import com.example.demo.Services.UserService;
+import com.example.demo.dob.Role;
 import com.example.demo.dob.User;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -24,10 +25,8 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
     @Autowired
     RoleRepository roleRepository;
-    @Autowired
-    PasswordConfig passwordConfig;
 
-
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
    /* public boolean saveUser(User user) {
         User userFromDB = userRepository.findAllByFirstName(user.getUsername());
@@ -54,10 +53,28 @@ public class UserServiceImpl implements UserService {
                 .setParameter("paramId", idMin).getResultList();
     }
 
-    @Override
+    public List<User> allUsers() {
+        return (List<User>) userRepository.findAll();
+    }
+
+  /*  @Override
     public User save(User user) {
         return userRepository.save(user);
     }
+*/
+  public boolean save(User user) {
+      User userFromDB = userRepository.findAllByFirstName(user.getUsername());
+
+      if (userFromDB != null) {
+          return false;
+      }
+
+      user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
+      user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+      userRepository.save(user);
+      return true;
+  }
+
 
     @Override
     public User getUserByPassword(String password) {
@@ -83,7 +100,6 @@ public class UserServiceImpl implements UserService {
     public List<User> findAllById(Long id) {
         return (List<User>) userRepository.findAllById(Collections.singleton(id));
     }
-
 
     @Override
     public void delete(User user) {

@@ -18,10 +18,8 @@ public class News {
     private String guid;
     private String description;
 
-
-public News(){
-
-}
+    public News(){
+    }
 
     public News(String title, String link, String pubDate, String creator, String category, String guid, String description) {
         this.title = title;
@@ -31,8 +29,6 @@ public News(){
         this.category = category;
         this.guid = guid;
         this.description = description;
-
-
     }
 
     public long getId() {

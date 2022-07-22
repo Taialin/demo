@@ -6,7 +6,10 @@ import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping(value = "/registration")
@@ -35,6 +38,24 @@ public class RegistrationController {
         return "registration";
     }
 
+
+    @PostMapping("/registration")
+    public String adding(@ModelAttribute("useForm") @Valid User user, BindingResult bindingResult, Model model){
+         if (bindingResult.hasErrors()) {
+             return "registration";
+         }
+         if(!user.getPassword().equals(user.getPassword())) {
+         model.addAttribute("passwordError" ,"Не совпадают ваши пароли");
+         return  "registration";}
+         if (!userService.save((user))){
+             model.addAttribute(("usernameError"), "Не правильно введено имя");
+             return "registration";
+         }
+
+         return "rejected:/";
+    }
+
+
   /*  @Autowired
     private UserService userService;
     @GetMapping("/registration")
@@ -44,7 +65,7 @@ public class RegistrationController {
 
         return "registration";
     }*/
-    @PostMapping("/doLogin")
+ /*   @PostMapping("/doLogin")
     public String create(@RequestParam("firstName") String name, @RequestParam("secondName") String secondName,
                          @RequestParam("phoneNumber") String phoneNumber, @RequestParam("email") String email,
                          @RequestParam("password") String password, Model model){
@@ -58,7 +79,7 @@ public class RegistrationController {
         model.addAttribute("user", user);
 
         return "sss";
-    }
+    }*/
    /* @PostMapping("/registration")
     public String addUser(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
 
