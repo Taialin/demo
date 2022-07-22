@@ -28,35 +28,15 @@ public class UserServiceImpl implements UserService {
     PasswordConfig passwordConfig;
 
 
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository) { this.userRepository = userRepository; }
 
-    /*User user = userRepository.findByUsername(username);
-
-        if (user == null) {
-        throw new UsernameNotFoundException("User not found");
-    }
-
-        return user;
-}
-
-    public User findUserById(Long userId) {
-        Optional<User> userFromDb = userRepository.findById(userId);
-        return userFromDb.orElse(new User());
-    }
-
-    public List<User> allUsers() {
-        return userRepository.findAll();
-    }
-*/
    /* public boolean saveUser(User user) {
-        User userFromDB = userRepository.findByUsername(user.getUsername());
+        User userFromDB = userRepository.findAllByFirstName(user.getUsername());
 
         if (userFromDB != null) {
             return false;
         }
 
-        user.setPassword(passwordConfig.encode(user.getPassword()));
+        user.setPassword(passwordConfig.passwordEncoder(user.getPassword()));
         userRepository.save(user);
         return true;
     }*/
@@ -74,15 +54,9 @@ public class UserServiceImpl implements UserService {
                 .setParameter("paramId", idMin).getResultList();
     }
 
- /*   @Override
-    public boolean save(User user) {
-
-            return userRepository.save(user);
-    }*/
-
     @Override
-    public boolean save(User user) {
-        return false;
+    public User save(User user) {
+        return userRepository.save(user);
     }
 
     @Override

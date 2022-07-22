@@ -34,21 +34,35 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         return new InMemoryUserDetailsManager(tuser);
     }
 
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests()
-//                .antMatchers("/api/**").permitAll()
-                .antMatchers("/api/**").hasRole(ApplicationUserRole.USER.name())
-                .antMatchers("/registration.html").hasRole(ApplicationUserRole.USER.name())
-                .and()
-                .formLogin()
-                .permitAll()
-                .loginPage("/login.html")
-                .loginProcessingUrl("/api/doLogin")
-                .defaultSuccessUrl("//api/doLogin")
-                .failureUrl("/loginPage?error")
-                .and()
-                .exceptionHandling().accessDeniedPage("/403");
+
+
+       public void configure(HttpSecurity httpSecurity) throws Exception {
+            httpSecurity
+                    .csrf()
+                    .disable()
+                    .authorizeRequests()
+                    .antMatchers("/api/**").hasRole(ApplicationUserRole.USER.name())
+                    .antMatchers("/registration").hasRole(ApplicationUserRole.USER.name())
+                    //Доступ только для пользователей с ролью Администратор
+                    .antMatchers("/admin/**").hasRole("ADMIN")
+                    .antMatchers("/news").hasRole("USER")
+                    //Доступ разрешен всем пользователей
+                    .antMatchers("/", "/resources/**").permitAll()
+                    //Все остальные страницы требуют аутентификации
+                    .anyRequest().authenticated()
+                    .and()
+                    //Настройка для входа в систему
+                    .formLogin()
+                    .loginPage("/login.html")
+                    //Перенарпавление на главную страницу после успешного входа
+                    .defaultSuccessUrl("//api/doLogin")
+                    .failureUrl("/loginPage?error")
+                    .permitAll()
+                    .and()
+                    .logout()
+                    .permitAll()
+                    .logoutSuccessUrl("/")
+                    .and()
+                    .exceptionHandling().accessDeniedPage("/403");
     }
 }

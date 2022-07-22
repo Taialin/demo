@@ -20,6 +20,9 @@ public class UserController {
     private UserService userService;
 
 
+
+
+
     @GetMapping("/all_users")
     public List<User> getAllUsers() {
         return userService.findAll();
@@ -32,21 +35,13 @@ public class UserController {
    }
 */
 
-   @PostMapping("/doLogin")
-   public String create(@RequestParam("firstName") String name, @RequestParam("secondName") String secondName,
-                        @RequestParam("phoneNumber") String phoneNumber, @RequestParam("email") String email,
-                        @RequestParam("password") String password, Model model){
-        User user = new User();
-        user.setFirstName(name);
-        user.setSecondName(secondName);
-        user.setPhoneNumber(phoneNumber);
-        user.setEmail(email);
-        user.setPassword(password);
+    @GetMapping("/registration")
+    public String registration(@ModelAttribute User user, Model model) {
+        User user_in = userService.save(user);
+        model.addAttribute(user_in.getFirstName());
 
-        model.addAttribute("user", user);
-
-        return "sss";
-   }
+        return "registration";
+    }
 
     @GetMapping("/user_id")
     @CrossOrigin(origins = "*")

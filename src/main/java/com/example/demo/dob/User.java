@@ -1,6 +1,10 @@
 package com.example.demo.dob;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Set;
 
 /*implements UserDetails*/
 @Entity
@@ -14,40 +18,55 @@ public class User  {
     private String phoneNumber;
     private String password;
     private String email;
-  /*  @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> roles;*/
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles;
 
-   /* @Override
+    public User(){
+
+    }
+   /* public User(Long id,
+     String firstName,
+     String secondName,
+     String phoneNumber,
+     String password,
+     String email) {
+        this.id = id;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+        this.email = email;
+    }*/
+   // @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
     }
-*/
-   /* @Override*/
+    //@Override
     public String getPassword() {
         return password;
     }
 
-  /*  @Override*/
+    //@Override
     public String getUsername() {
         return getFirstName();
     }
 
- /*   @Override
+    //@Override
     public boolean isAccountNonExpired() {
         return false;
     }
 
-    @Override
+    //@Override
     public boolean isAccountNonLocked() {
         return false;
     }
 
-    @Override
+    //@Override
     public boolean isCredentialsNonExpired() {
         return false;
-    }*/
+    }
 
- /*   @Override*/
+    //@Override
     public boolean isEnabled() {
         return true;
     }
@@ -96,11 +115,11 @@ public class User  {
         this.email = email;
     }
 
-    /*public Set<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
-    }*/
+    }
 }

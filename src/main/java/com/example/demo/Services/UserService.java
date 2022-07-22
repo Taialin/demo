@@ -5,7 +5,7 @@ import com.example.demo.dob.User;
 import java.util.List;
 
 public interface UserService /*extends UserDetailsService*/ {
-    boolean save(User user);
+    User save(User user);
 
     User getUserByPassword(String password);
     List<User> findAll();
