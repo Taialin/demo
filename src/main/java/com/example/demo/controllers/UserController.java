@@ -39,6 +39,7 @@ public class UserController {
     public String registration(@ModelAttribute User user, Model model) {
         User user_in = userService.save(user);
         model.addAttribute(user_in.getFirstName());
+        System.out.println(user.getFirstName());
 
         return "registration";
     }

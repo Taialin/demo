@@ -46,7 +46,7 @@
 </head>
 <body>
 <center> <h1> Regisrtation Form </h1> </center>
-<form action="register" method="post">
+<form action="/doLogin" method="post">
     <div class="container">
         <label>Username : </label>
         <input th:field="${firstName}" type="text" placeholder="Enter Username"name="clickedlinks" required>
@@ -59,7 +59,7 @@
         <label>Email : </label>
         <input th:field="${email}" type="email" placeholder="Enter Email" name="clickedlinks" required>
         <p></p>
-        <a href="../login.html" type="submit">Registrate</a>
+        <a href="../login" type="submit">Registrate</a>
 
         <button  type="button" class="cancelbtn"> Cancel</button>
 

@@ -1,29 +1,27 @@
 package com.example.demo.Security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public AppSecurityConfig(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
+
+    @Lazy
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
-    @Override
+
+   /* @Override
     @Bean
     public UserDetailsService userDetailsServiceBean() throws Exception {
       UserDetails tuser = User.builder()
@@ -32,9 +30,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .roles(ApplicationUserRole.USER.name())
                 .build();
         return new InMemoryUserDetailsManager(tuser);
-    }
-
-
+    }*/
 
        public void configure(HttpSecurity httpSecurity) throws Exception {
             httpSecurity
@@ -64,5 +60,11 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                     .logoutSuccessUrl("/")
                     .and()
                     .exceptionHandling().accessDeniedPage("/403");
+    }
+
+
+    @Autowired
+    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService()).passwordEncoder(bCryptPasswordEncoder());
     }
 }

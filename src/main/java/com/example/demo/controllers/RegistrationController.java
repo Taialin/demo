@@ -21,8 +21,21 @@ public class RegistrationController {
     @Autowired
     private UserRepository re;
 
-
+    @RequestMapping(method= RequestMethod.GET, produces = "text/html")
+    public String index() {
+        return "index";
+    }
     @Autowired
+    private UserService userService;
+
+    @GetMapping("/registration")
+    public String registration(Model model) {
+        model.addAttribute("userForm", new User());
+
+        return "registration";
+    }
+
+  /*  @Autowired
     private UserService userService;
     @GetMapping("/registration")
     public String registration(@ModelAttribute User user, Model model) {
@@ -30,7 +43,7 @@ public class RegistrationController {
        model.addAttribute(user_in.getFirstName());
 
         return "registration";
-    }
+    }*/
     @PostMapping("/doLogin")
     public String create(@RequestParam("firstName") String name, @RequestParam("secondName") String secondName,
                          @RequestParam("phoneNumber") String phoneNumber, @RequestParam("email") String email,
